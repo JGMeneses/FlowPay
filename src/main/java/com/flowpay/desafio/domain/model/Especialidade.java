@@ -1,4 +1,4 @@
-package com.flowpay.desafio.model;
+package com.flowpay.desafio.domain.model;
 
 public enum Especialidade {
     CARTAO,

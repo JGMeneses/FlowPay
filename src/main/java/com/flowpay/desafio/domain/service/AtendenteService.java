@@ -1,7 +1,9 @@
-package com.flowpay.desafio.service;
+package com.flowpay.desafio.domain.service;
 
-import com.flowpay.desafio.model.Atendente;
+import com.flowpay.desafio.domain.model.Atendente;
 import com.flowpay.desafio.repository.AtendenteRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -9,24 +11,15 @@ import java.util.List;
  * Serviço responsável pelo gerenciamento de cadastro e consulta de atendentes.
  */
 @Service
+@RequiredArgsConstructor
 public class AtendenteService {
-
     private final AtendenteRepository atendenteRepository;
 
-    public AtendenteService(AtendenteRepository atendenteRepository) {
-        this.atendenteRepository = atendenteRepository;
-    }
-
-    /**
-     * Persiste um novo atendente no sistema.
-     */
+    @Transactional
     public Atendente salvarAtendente(Atendente atendente) {
         return atendenteRepository.save(atendente);
     }
 
-    /**
-     * Retorna a lista completa de atendentes cadastrados.
-     */
     public List<Atendente> findAll() {
         return atendenteRepository.findAll();
     }
