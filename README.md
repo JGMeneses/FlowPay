@@ -64,3 +64,5 @@ O servidor iniciará em: [http://localhost:8080](http://localhost:8080).
 - **Distribuição Inteligente**: O sistema prioriza atendentes com menor carga de trabalho dentro da mesma especialidade.
 
 **Desenvolvido por João Meneses** 🚀
+<img width="1882" height="920" alt="image" src="https://github.com/user-attachments/assets/8af6f127-0566-4cb2-81a3-ca8dec663562" />
+
