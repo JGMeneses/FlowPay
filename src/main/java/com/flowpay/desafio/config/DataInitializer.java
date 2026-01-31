@@ -17,27 +17,34 @@ public class DataInitializer {
         return args -> {
             if (repository.count() == 0) {
                 Atendente a1 = Atendente.builder()
-                        .nome("Ricardo Silva")
+                        .nome("João Meneses")
                         .time("Squad Alpha")
                         .especialidade(Especialidade.CARTAO)
                         .atendimentosAtivos(0)
                         .build();
 
                 Atendente a2 = Atendente.builder()
-                        .nome("Beatriz Matos")
+                        .nome("Álvaro Prates")
                         .time("Squad Beta")
                         .especialidade(Especialidade.PIX)
                         .atendimentosAtivos(0)
                         .build();
 
                 Atendente a3 = Atendente.builder()
-                        .nome("Lucas Oliveira")
+                        .nome("Luan Braz")
                         .time("Squad Gamma")
-                        .especialidade(Especialidade.EMPRESTIMO)
+                        .especialidade(Especialidade.TROCAS)
                         .atendimentosAtivos(0)
                         .build();
 
-                repository.saveAll(List.of(a1, a2, a3));
+                Atendente a4 = Atendente.builder()
+                        .nome("Dário Rocha")
+                        .time("Squad Gamma")
+                        .especialidade(Especialidade.OUTROS)
+                        .atendimentosAtivos(0)
+                        .build();
+
+                repository.saveAll(List.of(a1, a2, a3,a4));
 
                 System.out.println("✅ Atendentes iniciais criados via DDD Builder!");
             }

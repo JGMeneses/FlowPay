@@ -12,7 +12,7 @@ public class TriagemService {
         String texto = assunto.toLowerCase();
         if (texto.contains("cartão") || texto.contains("limite")) return Especialidade.CARTAO;
         if (texto.contains("pix") || texto.contains("transferência")) return Especialidade.PIX;
-        if (texto.contains("empréstimo") || texto.contains("taxa")) return Especialidade.EMPRESTIMO;
+        if (texto.contains("trocas") || texto.contains("defeito")) return Especialidade.TROCAS;
 
         return Especialidade.OUTROS;
     }
