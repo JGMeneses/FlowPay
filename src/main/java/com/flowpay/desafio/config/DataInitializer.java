@@ -17,7 +17,7 @@ public class DataInitializer {
         return args -> {
             if (repository.count() == 0) {
                 Atendente a1 = Atendente.builder()
-                        .nome("João Meneses")
+                        .nome("João teste")
                         .time("Squad Alpha")
                         .especialidade(Especialidade.CARTAO)
                         .atendimentosAtivos(0)
