@@ -1,0 +1,62 @@
+name: Controle de Acesso - Main
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize, reopened]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  validar-permissao:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar Autor e Revisor
+        env:
+          USER_PERMITIDO: "username_da_pessoa_aqui"
+          ACTOR: ${{ github.actor }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          EVENT_NAME: ${{ github.event_name }}
+          REVIEW_USER: ${{ github.event.review.user.login }}
+          REVIEW_STATE: ${{ github.event.review.state }}
+        run: |
+          echo "Disparado por: $ACTOR"
+          echo "Autor do PR: $PR_AUTHOR"
+
+          if [ "$PR_AUTHOR" != "$USER_PERMITIDO" ]; then
+            echo "❌ ERRO: Apenas $USER_PERMITIDO pode abrir PRs para a main."
+            exit 1
+          fi
+
+          if [ "$EVENT_NAME" = "pull_request_review" ]; then
+            if [ "$REVIEW_STATE" = "approved" ] && [ "$REVIEW_USER" != "$USER_PERMITIDO" ]; then
+              echo "❌ ERRO: Apenas $USER_PERMITIDO pode aprovar alterações na main."
+              exit 1
+            fi
+          fi
+
+          echo "✅ Validação concluída com sucesso!"
+
+  fechar-pr-nao-autorizada:
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'username_da_pessoa_aqui'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Fechar PR e comentar
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '❌ Apenas usuários autorizados podem abrir PRs para a `main`. Esta PR será fechada automaticamente.'
+            });
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              state: 'closed'
+            });
